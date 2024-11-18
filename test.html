@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Form</title>
+</head>
+<body>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+
+  .invest-container {
+    display: flex;
+    gap: 30px;
+    max-width: 800px;
+    margin: auto;
+  }
+
+  .invest-form-container {
+    max-width: 500px;
+  }
+
+  .invest-form-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+  }
+
+  .invest-form-group {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+  }
+
+  .invest-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .invest-select, .invest-input {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .invest-add-input-year-selector {
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+  }
+
+  .invest-add-input-year-label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #374151;
+    font-weight: 500;
+  }
+
+  .invest-add-input-slider-container {
+    margin-bottom: 10px;
+  }
+
+  .invest-add-input-slider {
+    width: 100%;
+    height: 6px;
+    background: #e5e7eb;
+    border-radius: 4px;
+    outline: none;
+    -webkit-appearance: none;
+    position: relative;
+  }
+
+  .invest-add-input-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background-color: #3b82f6;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    transition: background-color 0.3s ease;
+  }
+
+  .invest-add-input-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background-color: #3b82f6;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    transition: background-color 0.3s ease;
+  }
+
+  .invest-add-input-slider::-webkit-slider-thumb:hover,
+  .invest-add-input-slider::-moz-range-thumb:hover {
+    background-color: #2563eb;
+  }
+
+  .invest-add-input-slider-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #6b7280;
+    font-weight: 500;
+  }
+
+  .invest-submit-button {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .invest-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .invest-button:hover {
+    background-color: #0056b3;
+  }
+
+  .invest-results-container {
+    max-width: 200px;
+    height: 130px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+
+  .invest-results-container h2 {
+    font-size: 16px;
+    color: #374151;
+  }
+
+  /* Responsive layout for smaller screens */
+  @media (max-width: 768px) {
+    .invest-container {
+      flex-direction: column;
+    }
+
+    .invest-form-row {
+      flex-direction: column;
+    }
+
+    .invest-form-group {
+      width: 100%;
+    }
+  }
+</style>
+
+<div class="invest-container">
+    <!-- Investment Form -->
+    <div class="invest-form-container">
+        <div class="invest-form-row">
+            <!-- Month Selection -->
+            <div class="invest-form-group">
+                <label class="invest-label" for="month">Month</label>
+                <select class="invest-select" id="month" name="month">
+                    <option value="January">January</option>
+                    <option value="February">February</option>
+                    <option value="March">March</option>
+                    <option value="April">April</option>
+                    <option value="May">May</option>
+                    <option value="June">June</option>
+                    <option value="July">July</option>
+                    <option value="August">August</option>
+                    <option value="September">September</option>
+                    <option value="October">October</option>
+                    <option value="November">November</option>
+                    <option value="December">December</option>
+                </select>
+            </div>
+
+            <!-- Portfolio Name Input -->
+            <div class="invest-form-group">
+                <label class="invest-label" for="portfolio">Portfolio Name</label>
+                <input type="text" class="invest-input" id="portfolio" name="portfolio" placeholder="Enter portfolio name">
+            </div>
+
+            <!-- Year Input -->
+            <div class="invest-form-group">
+                <label class="invest-label" for="year">Year</label>
+                <input type="text" class="invest-input" id="year" name="year" placeholder="Enter year">
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="invest-submit-button">
+            <button type="button" class="invest-button" onclick="calculateInvestment()">Investment</button>
+        </div>
+
+        <!-- No. of Years Slider -->
+        <div class="invest-add-input-year-selector">
+          <label class="invest-add-input-year-label">
+              No. Of Years: <span id="selectedYear">1</span>
+          </label>
+          <div class="invest-add-input-slider-container">
+              <input 
+                  type="range" 
+                  class="invest-add-input-slider" 
+                  min="1" 
+                  max="20" 
+                  value="1"
+                  id="yearSlider"
+                  oninput="document.getElementById('selectedYear').innerText = this.value"
+              >
+          </div>
+          <div class="invest-add-input-slider-labels">
+              <span>1</span>
+              <span>20</span>
+          </div>
+      </div> 
+    </div>
+
+
+    <!-- Investment Results Section -->
+    <section style="display: flex; flex-direction: column; gap: 10px;">
+        <div class="invest-results-container">
+            <h2>Current return: <span id="currentReturn">100</span></h2>
+            <h2>Total: <span id="total">100</span></h2>
+            <h2>No of Periods: <span id="periods">100</span></h2>
+            <h2>% Gain: <span id="gain">100</span></h2>
+        </div>
+
+        <!-- Return Button -->
+        <div class="invest-return-btn-cntr">
+            <button style="width: 200px;" class="invest-button">Return <span>100</span></button>
+        </div>
+    </section>
+</div>
+
+<script>
+function calculateInvestment() {
+    // Placeholder function to simulate calculations
+    document.getElementById('currentReturn').innerText = "150";
+    document.getElementById('total').innerText = "500";
+    document.getElementById('periods').innerText = "12";
+    document.getElementById('gain').innerText = "25%";
+}
+</script>
+
+</body>
+</html>
